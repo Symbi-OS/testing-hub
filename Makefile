@@ -1,4 +1,4 @@
-.PHONY: all check_kernel_cmdline check_kernel_version run_adaptors run_unit_tests
+.PHONY: all check_kernel_cmdline check_kernel_version run_adaptors run_unit_tests clean_unit_tests
 
 # ANSI color codes
 RED := "\033[1;31m"
@@ -63,4 +63,7 @@ run_unit_tests:
 		printf "%b[!]%b Failed to pass all unit tests\n" $(RED) $(NO_COLOR); \
 		exit 1; \
 	fi
+
+clean_unit_tests:
+	$(MAKE) -C unit-tests clean
 
