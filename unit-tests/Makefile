@@ -32,6 +32,7 @@ run_tests: $(EXECUTABLES)
 		if [ $$? -ne 0 ] ; then \
 			exit 1 ; \
 		fi ; \
+		printf "\n" ; \
 	done
 
 .PHONY: all clean run_tests
