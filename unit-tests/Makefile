@@ -11,7 +11,7 @@ SYMLIB_LINK=-L $(SYMLIB_DYNAM_BUILD_DIR) -lSym
 CFLAGS += -I$(SYMLIB_INCLUDE_DIR)
 LDFLAGS += $(SYMLIB_LINK)
 
-# Source files and executables
+# Tests of elevating symbiote programs
 SOURCES=$(wildcard *.c)
 EXECUTABLES=$(SOURCES:.c=)
 
@@ -26,9 +26,13 @@ all: $(EXECUTABLES)
 clean:
 	rm -f $(EXECUTABLES)
 
-run_tests: $(EXECUTABLES)
+run_tests: $(EXECUTABLES) sc_lib_test
 	@for exe in $^ ; do \
-		./$$exe ; \
+		if [ "$$exe" == "sc_lib_test" ]; then \
+			shortcut.sh -be -s "write->__x64_sys_write" --- ./$$exe ; \
+		else \
+			./$$exe ; \
+		fi ; \
 		if [ $$? -ne 0 ] ; then \
 			exit 1 ; \
 		fi ; \
