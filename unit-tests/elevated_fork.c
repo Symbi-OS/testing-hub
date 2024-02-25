@@ -1,6 +1,7 @@
 #define _GNU_SOURCE
 #include "sym_unit_testing.h"
 #include <sched.h>
+#include <sys/wait.h>
 
 uint64_t read_cr3() {
   uint64_t cr3;
@@ -37,9 +38,11 @@ TEST_CASE(elevated_fork) {
   } else {
     printf("child pid: %i\n", getpid());
     printf("child cr3: 0x%lx\n", read_cr3());
+    exit(0);
   }
   
   sym_lower();
+  wait(NULL);
 }
 
 UNIT_TEST_ENTRY_POINT(elevated_fork);
